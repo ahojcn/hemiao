@@ -13,10 +13,15 @@ class SuSheInfo(models.Model):
 
     def stus_property(self):
         stus = StudentInfo.objects.filter(ssid=self)
-        res = []
+        res = "<table>"
         for i in stus:
             url = "/app/studentinfo/?q=" + str(i.name)
-            res.append(f'<a class="temp1" href="{url}">{i.name}</a>')
+            res += f"<tr>" \
+                   f"<td><a href='{url}'>{i.name}</a></td>" \
+                   f"<td>{StudentInfo.CAMPUS_CHOICES[i.campus][1]}</td>" \
+                   f"</tr>"
+        res += "</table>"
+        print(mark_safe(res))
         return mark_safe(res)
 
     stus_property.short_description = "学生"
